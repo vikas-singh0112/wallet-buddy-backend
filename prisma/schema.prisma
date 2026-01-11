@@ -1,8 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
   provider = "prisma-client"
@@ -19,36 +14,46 @@ enum ExpenseType {
 }
 
 model User {
-  id    String  @id @default(uuid())
-  email String  @unique
-  firstName  String
-  lastName  String
-  password String
-  phone String
-  category Category[]
-  transaction Transaction[]
+  id           String         @id @default(uuid())
+  email        String         @unique
+  firstName    String
+  lastName     String
+  password     String
+  phone        String
+  refreshToken RefreshToken[]
+  category     Category[]
+  transaction  Transaction[]
+  createdAt    DateTime       @default(now()) @db.Timestamptz(3)
+  updatedAt    DateTime       @updatedAt @db.Timestamptz(3)
+}
+
+model RefreshToken {
+  id        String   @id @default(uuid())
+  token     String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  expiresAt DateTime
   createdAt DateTime @default(now()) @db.Timestamptz(3)
-  updatedAt DateTime @updatedAt @db.Timestamptz(3)
 }
 
 model Category {
-  id String @id @default(uuid())
-  userId String
+  id           String        @id @default(uuid())
+  userId       String
   categoryName String
-  type ExpenseType
-  createdAt DateTime @default(now()) @db.Timestamptz(3)
-  transaction Transaction[]
-  user User @relation(fields: [userId], references: [id])
+  type         ExpenseType
+  createdAt    DateTime      @default(now()) @db.Timestamptz(3)
+  transaction  Transaction[]
+  user         User          @relation(fields: [userId], references: [id])
 }
 
 model Transaction {
-  id String @id @default(uuid())
-  userId String
-  categoryId String
-  amount Decimal
+  id          String      @id @default(uuid())
+  userId      String
+  categoryId  String
+  amount      Decimal
   description String
-  type ExpenseType
-  createdAt DateTime @default(now()) @db.Timestamptz(3)
-  user User @relation(fields: [userId], references: [id])
-  category Category @relation(fields: [categoryId], references: [id])
+  type        ExpenseType
+  createdAt   DateTime    @default(now()) @db.Timestamptz(3)
+  user        User        @relation(fields: [userId], references: [id])
+  category    Category    @relation(fields: [categoryId], references: [id])
 }

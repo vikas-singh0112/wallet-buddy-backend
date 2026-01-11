@@ -1,6 +1,8 @@
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import { globalErrorHandler } from "./utils/globalError";
+
 
 const app = express();
 app.use(cors());
@@ -31,4 +33,7 @@ app.use("/api/auth", authRouter);
 // protected routes
 // app.use(verifyJWT)
 
+
+// global error
+app.use(globalErrorHandler)
 export { app };
