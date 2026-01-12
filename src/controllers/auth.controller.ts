@@ -97,7 +97,7 @@ const signin = async (
 
   const { password, updatedAt, ...userData } = user;
 
-  res.cookie("refreshToken", refreshToken, {
+  res.cookie("wallet_buddy_r", refreshToken, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "strict",
