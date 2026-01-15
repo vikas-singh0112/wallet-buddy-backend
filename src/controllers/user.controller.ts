@@ -1,7 +1,7 @@
 import type { Request, Response } from "express";
 import { ApiError } from "../utils/ApiError";
 import { prisma } from "../db/prismaInstance";
-import { userIdSchema } from "../utils/schema";
+import { userIdSchema } from "../zodSchemas/zodUserSchema";
 import type { AuthenticatedRequest } from "../middleware/authenticateJWT";
 import { ApiResponse } from "../utils/ApiResponse";
 

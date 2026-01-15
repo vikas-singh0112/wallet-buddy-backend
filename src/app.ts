@@ -26,6 +26,7 @@ app.use(cookieParser());
 // importing router as named imports
 import authRouter from "./routes/auth.route";
 import userRouter from "./routes/user.route";
+import transactionRouter from "./routes/transaction.route";
 import authenticateJWT from "./middleware/authenticateJWT";
 
 // non-protected routes
@@ -34,6 +35,7 @@ app.use("/api/auth", authRouter);
 // protected routes
 app.use(authenticateJWT);
 app.use("/api/user", userRouter);
+app.use("/api/transaction", transactionRouter);
 
 // global error
 app.use(globalErrorHandler);

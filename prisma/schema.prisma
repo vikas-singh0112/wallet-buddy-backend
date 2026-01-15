@@ -44,13 +44,14 @@ model Category {
   createdAt    DateTime      @default(now()) @db.Timestamptz(3)
   transaction  Transaction[]
   user         User          @relation(fields: [userId], references: [id])
+  @@unique([userId, categoryName, type])
 }
 
 model Transaction {
   id          String      @id @default(uuid())
   userId      String
   categoryId  String
-  amount      Decimal
+  amount      Decimal @db.Decimal(10,2)
   description String
   type        ExpenseType
   createdAt   DateTime    @default(now()) @db.Timestamptz(3)
